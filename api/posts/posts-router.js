@@ -64,4 +64,21 @@ router.put('/:id', (req, res) => {
       })
   })
 
+router.delete('/:id', (req, res) => {
+    Post.remove(req.params.id)
+      .then(count => {
+        if (count > 0) {
+          res.status(200).json({ message: 'The post has been nuked' })
+        } else {
+          res.status(404).json({ message: 'The post could not be found' })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        res.status(500).json({
+          message: 'Error removing the post',
+        })
+      })
+  })
+
 module.exports = router
